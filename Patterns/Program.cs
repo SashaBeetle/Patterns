@@ -3,32 +3,92 @@ using System.Collections.Generic;
 
 namespace Patterns
 {
-    class Program : Developer
+    class Program
     {
         static void Main()
         {
-            List<string> Projectss = new List<string>();
-            
-            Projectss.Add("Yui");
-            Projectss.Add("Ruis");
-            assign(Projectss, "Apple");
-            unassign(Projectss, "Yui");
-            foreach (string el in Projectss)
-            {
-                Console.WriteLine(el);
-            }
-            bool elnt;
-            elnt = assign_possibility(Projectss);
-            Console.WriteLine("___________");
-            assigned_projects(Projectss);
-            Console.WriteLine("___________");
-            Console.Write("Space for new projects = {0}\n", elnt);
-            
+            Developer dev1 = new Developer();
+            Developer dev2 = new Developer();
+            Developer dev3 = new Developer();
+            Project Apple = new Project();
+            Apple.title = "Apple";
+            Project.add_developer(dev1.name, Apple.Developers);
+            Project.add_developer(dev2.name, Apple.Developers);
+            Project.add_developer(dev3.name, Apple.Developers);
+            Project Xiomi = new Project();
+            Xiomi.title = "Xiomi";
+            Project.add_developer(dev1.name, Xiomi.Developers);
+            Project.add_developer(dev3.name, Xiomi.Developers);
+            Project Terom = new Project();
+            Terom.title = "Terom";
+            Project.add_developer(dev3.name, Terom.Developers);
+            dev1.id = 013;
+            dev1.name = "Andry";
+            dev1.number = "098-90-50-80";
+            dev1.position = 1;
+            dev1.rank = "Junior";
+            dev1.salary = 734.23f;
+            Developer.assign(dev1.Projects, Apple.title);
+            Developer.assign(dev1.Projects, Xiomi.title);
+            dev2.id = 035;
+            dev2.name = "Pavlo";
+            dev2.number = "098-50-40-83";
+            dev2.position = 2;
+            dev2.rank = "Middle";
+            dev2.salary = 1472.67f;
+            Developer.assign(dev2.Projects, Apple.title);
+            dev3.id = 075;
+            dev3.name = "Oleg";
+            dev3.number = "068-47-45-38";
+            dev3.position = 3;
+            dev3.rank = "Senior";
+            dev3.salary = 3503.37f;
+            Developer.assign(dev3.Projects, Apple.title);
+            Developer.assign(dev3.Projects, Xiomi.title);
+            Developer.assign(dev3.Projects, Terom.title);
+            Console.WriteLine("Проекти {0}:", dev1.name);
+            Developer.assigned_projects(dev1.Projects);
+            YesOrNot(dev1.name, dev1.Projects);
+            Console.WriteLine("\nПроекти {0}:", dev2.name);
+            Developer.assigned_projects(dev2.Projects);
+            YesOrNot(dev2.name, dev2.Projects);
+            Console.WriteLine("\nПроекти {0}:", dev3.name);
+            Developer.assigned_projects(dev3.Projects);
+            YesOrNot(dev3.name, dev3.Projects);
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine("     ------After Upgrade------");
+            Console.WriteLine("----------------------------------------");
+            Developer.unassign(dev1.Projects, Apple.title);
+            Developer.assign(dev1.Projects, Terom.title);
+            Developer.assign(dev2.Projects, Xiomi.title);
+            Developer.assign(dev2.Projects, Terom.title);
+            Developer.unassign(dev3.Projects, Xiomi.title);
+            Console.WriteLine("Проекти {0}:", dev1.name);
+            Developer.assigned_projects(dev1.Projects);
+            YesOrNot(dev1.name, dev1.Projects);
+            Console.WriteLine("\nПроекти {0}:", dev2.name);
+            Developer.assigned_projects(dev2.Projects);
+            YesOrNot(dev2.name, dev2.Projects);
+            Console.WriteLine("\nПроекти {0}:", dev3.name);
+            Developer.assigned_projects(dev3.Projects);
+            YesOrNot(dev3.name, dev3.Projects);
         }
-        
+        private static void YesOrNot(string name, List<string> listic)
+        {
+            int a = listic.Count;
+            if(Developer.assign_possibility(listic)== true)
+            {
+                Console.WriteLine("<{0} Може взяти проект, у нього {1} Проект(а)>", name, a);
+            }
+            else
+            {
+                Console.WriteLine("<{0} Не може взяти бiльше проектiв, у нього {1} Проект(а)>", name, a);
+            }
+        }
+
     }
     
-    class Developer
+   public class Developer
     {
        public int id, position;
        public float salary;
@@ -50,7 +110,7 @@ namespace Patterns
         {
             foreach (string el in Project)
             {
-                Console.WriteLine(el);
+                Console.WriteLine("-{0} ",el);
             }
         }
 
@@ -69,7 +129,7 @@ namespace Patterns
             return res;
         }
     }
-    class Assignment
+   public class Assignment
     {
         public Dictionary<string, string> received_tasks = new Dictionary<string, string>();
         public bool is_done;
@@ -82,7 +142,7 @@ namespace Patterns
         }
     }
 
-    class Project
+   public class Project
     {
         public string title;
         DateTime start_date = new DateTime();
@@ -102,7 +162,7 @@ namespace Patterns
         }
     }
 
-    class QAEngineer
+    public class QAEngineer
     {
         public int id;
         public string name, adress, phone_number, email, rank, position;
@@ -115,7 +175,7 @@ namespace Patterns
         }
     }
 
-    class ProjectManager
+   public class ProjectManager
     {
         public int id;
         public string name, adress, phone_number, email;

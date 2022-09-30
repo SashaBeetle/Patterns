@@ -121,5 +121,10 @@ namespace Patterns
         public string name, adress, phone_number, email;
         public float salary;
 
+        public static void discuss_progress(string developer)
+        {
+
+        }
     }
+
 }

@@ -3,75 +3,57 @@ using System.Collections.Generic;
 
 namespace Patterns
 {
+    
     class Program // Main class
     {
         static void Main() // Main Function
         {
-            Developer dev1 = new Developer(); // Created Objects
+            float res;
+            Developer dev1 = new Developer();
             Developer dev2 = new Developer();
-            Developer dev3 = new Developer();
-            Project Apple = new Project();
-            Project Xiomi = new Project();
-            Project Terom = new Project();
-            Apple.title = "Apple"; // Inscribe inf. about Projects
-            Project.add_developer(dev1.name, Apple.Developers);
-            Project.add_developer(dev2.name, Apple.Developers);
-            Project.add_developer(dev3.name, Apple.Developers);
-            Xiomi.title = "Xiomi";
-            Project.add_developer(dev1.name, Xiomi.Developers);
-            Project.add_developer(dev3.name, Xiomi.Developers);
-            Terom.title = "Terom";
-            Project.add_developer(dev3.name, Terom.Developers);
-            dev1.id = 013; // Inscribe inf. about dev1
-            dev1.name = "Andry";
-            dev1.number = "098-90-50-80";
-            dev1.position = 1;
-            dev1.rank = "Junior";
-            dev1.salary = 734.23f;
-            Developer.assign(dev1.Projects, Apple.title);
-            Developer.assign(dev1.Projects, Xiomi.title);
-            dev2.id = 035; // Inscribe inf. about dev2
-            dev2.name = "Pavlo";
-            dev2.number = "098-50-40-83";
-            dev2.position = 2;
-            dev2.rank = "Middle";
-            dev2.salary = 1472.67f;
-            Developer.assign(dev2.Projects, Apple.title);
-            dev3.id = 075; // Inscribe inf. about dev3
-            dev3.name = "Oleg";
-            dev3.number = "068-47-45-38";
-            dev3.position = 3;
-            dev3.rank = "Senior";
-            dev3.salary = 3503.37f;
-            Developer.assign(dev3.Projects, Apple.title);
-            Developer.assign(dev3.Projects, Xiomi.title);
-            Developer.assign(dev3.Projects, Terom.title);
-            Console.WriteLine("Проекти {0}:", dev1.name); // Showed the result dev1
-            Developer.assigned_projects(dev1.Projects);
-            YesOrNot(dev1.name, dev1.Projects);
-            Console.WriteLine("\nПроекти {0}:", dev2.name); // Showed the result dev2
-            Developer.assigned_projects(dev2.Projects);
-            YesOrNot(dev2.name, dev2.Projects);
-            Console.WriteLine("\nПроекти {0}:", dev3.name); // Showed the result dev3
-            Developer.assigned_projects(dev3.Projects);
-            YesOrNot(dev3.name, dev3.Projects);
-            Console.WriteLine("----------------------------------------");
-            Console.WriteLine("     ------After Upgrade------"); // After rebuild
-            Console.WriteLine("----------------------------------------");
-            Developer.unassign(dev1.Projects, Apple.title); // upgraded inf. about dev 1, 2, 3
-            Developer.assign(dev1.Projects, Terom.title);
-            Developer.assign(dev2.Projects, Xiomi.title);
-            Developer.assign(dev2.Projects, Terom.title);
-            Developer.unassign(dev3.Projects, Xiomi.title);
-            Console.WriteLine("Проекти {0}:", dev1.name); // Showed the result dev1
-            Developer.assigned_projects(dev1.Projects);
-            YesOrNot(dev1.name, dev1.Projects);
-            Console.WriteLine("\nПроекти {0}:", dev2.name); // Showed the result dev1
-            Developer.assigned_projects(dev2.Projects);
-            YesOrNot(dev2.name, dev2.Projects);
-            Console.WriteLine("\nПроекти {0}:", dev3.name); // Showed the result dev1
-            Developer.assigned_projects(dev3.Projects);
-            YesOrNot(dev3.name, dev3.Projects);
+            Task task1 = new Task();
+            Task task2 = new Task();
+            Project Sigma = new Project();
+            Employee em1 = new Employee();
+            dev1.first_name = "Andry";
+            dev1.second_name = "Jonson";
+            dev2.first_name = "Pavlo";
+            dev2.second_name = "Tuchka";
+            dev1.salary = 3456.34f;
+            dev1.rank = "PM";
+            dev2.rank = "Junior";
+            dev2.salary = 983.65f;
+            res = dev1.calculate_salary();
+            Console.WriteLine("Salary {0} {1}: {2}$",dev1.first_name,dev1.second_name ,res);
+            res = dev2.calculate_salary();
+            Console.WriteLine("Salary {0} {1}: {2}$", dev2.first_name, dev2.second_name, res);
+            Console.WriteLine();
+            Console.WriteLine("Sick leave {1} = {0}", dev1.ask_sick_leave(),dev1.first_name);
+            Console.WriteLine("Sick leave {1} = {0}", dev2.ask_sick_leave(), dev2.first_name);
+            Console.WriteLine();
+            Sigma.title = "Sigma";
+            task1.title = "Server crash test";
+            task1.id = 11;
+            task2.title = "Creating site";
+            task2.id = 03;
+            Sigma.task_list.Add(task1.id);
+            Sigma.task_list.Add(task2.id);
+            task1.implement_item("Personal Computer");
+            task1.implement_item("Pen");
+            task2.implement_item("Laptop");
+            Console.WriteLine("Items for {0}",task1.title);
+            foreach (string el in task1.items)
+            {
+                Console.WriteLine(" '{0}' ",el);
+            }
+            Console.WriteLine("Items for {0}", task2.title);
+            foreach (string el in task2.items)
+            {
+                Console.WriteLine(" '{0}' ", el);
+            }
+
+
+
         }
         private static void YesOrNot(string name, List<string> listic) // Function for reduction code
         {
@@ -88,24 +70,12 @@ namespace Patterns
 
     }
     
-   public class Developer // class Developer
+   public class Developer : Employee // class Developer
     {
-       public int id, position; // About Developer
-       public float salary;
-       public string name, address, number, email, rank;
+       
        public List<string> Projects = new List<string>();
 
-
-        public static void assign(List<string> Project, string a) // Added Dev. to the Project
-        {
-            Project.Add(a);
-        }
-
-        public static void unassign(List<string> Project, string a) // Remove Dev. from the Project
-        {
-            Project.Remove(a);
-        }
-
+        
         public static void assigned_projects(List<string> Project) // Show developer projects
         {
             foreach (string el in Project)
@@ -130,59 +100,118 @@ namespace Patterns
             return res;
         }
     }
-   public class Assignment // class Assignment
+
+   public class PersonalInfo // class PersonalInfo
+    {
+        public int id, position; // About PersonalInfo
+        public string first_name, second_name, address, phone_number, email, rank;
+        public float salary;
+    }
+
+    public class Employee : PersonalInfo // abstract class Employee + Progeny class
+    {
+        public float calculate_salary() 
+        {
+            
+            return this.salary * 12;
+
+        }
+
+        public bool ask_sick_leave()
+        {
+            if (this.rank == "PM")
+            {
+                return true;
+            }
+            else if (this.rank == "QA")
+            {
+                return true;
+            }
+            else return false;
+        }
+    }
+    public class AssigmentManagement : Project
+    {
+
+    }
+
+    public class Project : Employee // class Project
+    {
+        public string title; // About Project
+        DateTime start_date = new DateTime();
+        public List<int> task_list = new List<int>();
+        public List<string> Developers = new List<string>();
+        public int limit;
+
+
+        public void assign(string dev_name) // Add developer to project
+        {
+            this.Developers.Add(dev_name);
+
+        }
+        public void unassign(string dev_name) // Remove developer from project
+        {
+            this.Developers.Remove(dev_name);
+        }
+        public  void get_specific_employees(string dev_name)
+        {
+            this.Developers.Add(dev_name);
+        }
+    }
+
+    public class Assignment : Task // class Assignment
     {
         public Dictionary<string, string> received_tasks = new Dictionary<string, string>(); // About Assigment
         public bool is_done;
         public string description,status;
 
-
+       
         public static void get_tasks_to_date(string task) // Gets tasks to date
         {
            
         }
     }
 
-   public class Project // class Project
+
+    public class Task
     {
-        public string title; // About Project
-        DateTime start_date = new DateTime();
-        public List<string> Tasks = new List<string>();
-        public List<string> Developers = new List<string>();
-        public int limit;
+        public int id;
+        public string title, status, related_project, comment;
+        DateTime deadline = new DateTime();
+        public List<string> items = new List<string>();
 
 
-        public static void add_developer(string dev_name, List<string> Developers) // Add developer to project
+        public void implement_item(string item)
         {
-            Developers.Add(dev_name);
-
+            this.items.Add(item);
         }
-        public static void remove_developer(string dev_name, List<string> Developers) // Remove developer from project
+
+        public void add_comment(string comment)
         {
-            Developers.Remove(dev_name);
+            this.comment = comment;
         }
     }
 
-    public class QAEngineer
+    public class QA : Employee
     {
-        public int id;
-        public string name, adress, phone_number, email, rank, position;
-        public float salary;
      
         
-        public static void test_feature(string test)
+        public static void add_ticket(string test)
         {
 
         }
+        
     }
 
-   public class ProjectManager
+   public class ProjectManager : Employee
     {
-        public int id;
-        public string name, adress, phone_number, email;
-        public float salary;
 
-        public static void discuss_progress(string developer)
+        public void employee_requests()
+        {
+            ask_sick_leave();
+        }
+
+        public static void discuss_progress()
         {
 
         }
